@@ -1,0 +1,44 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+
+<div class="card">
+    <section 
+        class="avatar" 
+        style="background: url({{instructor.avatar_url}}) no-repeat center center / cover">
+    </section>
+
+    <section class="details" >
+        <form method="post" action="/instructors?_method=PUT">
+
+            <h3>Novo instrutor</h3>
+
+            {% include 'instructors/fields.njk'%}
+
+            <input type="hidden" name="id" value="{{instructor.id}}">
+            
+        </form>
+
+        <form id="form-delete" method="post" action="/instructors?_method=DELETE">
+            <input type="hidden" name="id" value="{{instructor.id}}">
+            <button type="submit">DELETAR</button>
+        </form>
+
+        
+    </section>
+
+</div>
+
+<script>
+
+    const formDelete = document.querySelector("#form-delete")
+    formDelete.addEventListener("submit", function(event) {
+        const confirmation = confirm("Deseja deletar esse instrutor ?")
+        if(!confirmation) {
+            event.preventDefault()
+        }
+    }) 
+
+</script>
+
+{% endblock content %}
